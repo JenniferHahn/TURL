@@ -120,7 +120,7 @@ def train(args, config, train_dataset, model, eval_dataset = None):
         {'params': [p for n, p in model.cls.named_parameters() if not any(nd in n for nd in no_decay)], 'weight_decay': args.weight_decay, 'lr': args.learning_rate*10 if args.cls_learning_rate==0 else args.cls_learning_rate},
         {'params': [p for n, p in model.cls.named_parameters() if any(nd in n for nd in no_decay)], 'weight_decay': 0.0, 'lr': args.learning_rate*10 if args.cls_learning_rate==0 else args.cls_learning_rate}
         ]
-    optimizer = AdamW(optimizer_grouped_parameters, eps=args.adam_epsilon) ### using Adam for backpropagation --> optimizer
+    optimizer = AdamW(optimizer_grouped_parameters, eps=args.adam_epsilon) # Adam used for backpropagation --> optimizer
     scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=args.warmup_steps, num_training_steps=t_total)
     if args.fp16:
         try:
@@ -465,11 +465,11 @@ def main():
     parser.add_argument('--server_ip', type=str, default='', help="For distant debugging.")
     parser.add_argument('--server_port', type=str, default='', help="For distant debugging.")
 
-    args = parser.parse_args(['--output_dir', 'src/data/product/TURL/output',
-                              '--model_name_or_path', 'src/data/product/TURL/input',
+    args = parser.parse_args(['--output_dir', 'src/data/schemafiltereddata/TURL/',
+                              '--model_name_or_path', 'src/data/schemafiltereddata/TURL/input',
                               '--model_type', 'CT',
                               '--do_train',
-                              '--data_dir', 'src/input',
+                              '--data_dir', 'src/data/schemafiltereddata/TURL/input',
                               '--config_name', 'configs/table-base-config_v2.json'
                               ])
     ###args = parser.parse_args() ### change back when running remote
